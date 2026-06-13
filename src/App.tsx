@@ -352,8 +352,12 @@ export default function App() {
     // Clear backbuffer
     ctx.clearRect(0, 0, COURT_WIDTH, COURT_HEIGHT);
 
-    // Modern neon glowing tennis court grid effect
-    ctx.strokeStyle = 'rgba(56, 189, 248, 0.15)';
+    // Warm elegant athletic light field background
+    ctx.fillStyle = '#f8fafc'; 
+    ctx.fillRect(0, 0, COURT_WIDTH, COURT_HEIGHT);
+
+    // Modern clean grid effect
+    ctx.strokeStyle = 'rgba(15, 23, 42, 0.05)';
     ctx.lineWidth = 1;
     const gridSize = 40;
     for (let x = 0; x < COURT_WIDTH; x += gridSize) {
@@ -369,13 +373,13 @@ export default function App() {
       ctx.stroke();
     }
 
-    // Outer tennis court boundaries
-    ctx.strokeStyle = '#38bdf8';
+    // Outer tennis court boundaries (gorgeous high-contrast sky blue line)
+    ctx.strokeStyle = '#0284c7';
     ctx.lineWidth = 4;
     ctx.strokeRect(10, 10, COURT_WIDTH - 20, COURT_HEIGHT - 20);
 
     // Center dividing tennis net
-    ctx.strokeStyle = '#c084fc';
+    ctx.strokeStyle = '#8b5cf6';
     ctx.setLineDash([12, 10]);
     ctx.lineWidth = 3;
     ctx.beginPath();
@@ -384,80 +388,70 @@ export default function App() {
     ctx.stroke();
     ctx.setLineDash([]); // Reset line dash
 
-    // Draw Speed Multiplier Indicator on the field background
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
+    // Draw Speed Multiplier Indicator on the field background (elegant slate gray)
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.05)';
     ctx.font = 'bold 70px JetBrains Mono';
     ctx.textAlign = 'center';
     ctx.fillText(`${Math.round(mult * 100)}% SPEED`, COURT_WIDTH / 2, COURT_HEIGHT / 2 + 25);
 
-    // Draw modern trajectory tracer trailing effect
+    // Draw modern trajectory tracer trailing effect (warm golden amber)
     trailEffect.forEach((pos, idx) => {
       const opacity = (10 - idx) / 25;
-      ctx.fillStyle = `rgba(251, 191, 36, ${opacity})`;
+      ctx.fillStyle = `rgba(245, 158, 11, ${opacity})`;
       ctx.beginPath();
       ctx.arc(pos.x, pos.y, BALL_RADIUS * (1 - idx * 0.08), 0, Math.PI * 2);
       ctx.fill();
     });
 
-    // Draw Left Player Paddle (glowing dynamic pink/blue)
-    const playerColor = gameState.selectedPlayer?.color || '#38bdf8';
+    // Draw Left Player Paddle
+    const playerColor = gameState.selectedPlayer?.color || '#0284c7';
     ctx.fillStyle = playerColor;
-    ctx.shadowBlur = 12;
-    ctx.shadowColor = playerColor;
     ctx.beginPath();
     ctx.roundRect(15, py, PADDLE_WIDTH, PADDLE_HEIGHT, 6);
     ctx.fill();
 
-    // Draw Right Opponent Paddle (glowing dynamic violet)
-    const opponentColor = gameState.selectedOpponent?.color || '#c084fc';
+    // Draw Right Opponent Paddle
+    const opponentColor = gameState.selectedOpponent?.color || '#8b5cf6';
     ctx.fillStyle = opponentColor;
-    ctx.shadowColor = opponentColor;
     ctx.beginPath();
     ctx.roundRect(COURT_WIDTH - 15 - PADDLE_WIDTH, oy, PADDLE_WIDTH, PADDLE_HEIGHT, 6);
     ctx.fill();
 
-    // Reset shadow values for rendering subsequent elements
-    ctx.shadowBlur = 0;
-
-    // Draw tennis ball (A glowing gold sphere)
+    // Draw tennis ball (Glowing gold sphere)
     const ballGradient = ctx.createRadialGradient(bx, by, 1, bx, by, BALL_RADIUS);
     ballGradient.addColorStop(0, '#fef08a'); // Bright light yellow
-    ballGradient.addColorStop(1, '#fbbf24'); // Sun warm gold
+    ballGradient.addColorStop(1, '#f59e0b'); // Amber warm gold
     ctx.fillStyle = ballGradient;
-    ctx.shadowBlur = 15;
-    ctx.shadowColor = '#fbbf24';
     ctx.beginPath();
     ctx.arc(bx, by, BALL_RADIUS + 1, 0, Math.PI * 2);
     ctx.fill();
-
-    ctx.shadowBlur = 0; // Reset shadow again
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between font-sans selection:bg-sky-500/30 overflow-x-hidden relative" id="tennis_root">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col justify-between font-sans selection:bg-sky-500/10 overflow-x-hidden relative" id="tennis_root">
       
       {/* Dynamic Background visual pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-purple-950/20 to-slate-950 pointer-events-none z-0"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-100/50 via-purple-50/20 to-slate-50 pointer-events-none z-0"></div>
 
       {/* Modern Top Header Station */}
-      <header className="border-b border-slate-800 bg-slate-900/60 backdrop-blur-md relative z-10 py-5 px-6" id="app_header">
+      <header className="border-b border-slate-200 bg-white/80 backdrop-blur-md relative z-10 py-5 px-6" id="app_header">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <div className="bg-gradient-to-tr from-sky-400 to-purple-500 p-2.5 rounded-xl shadow-lg ring-1 ring-sky-300/30 flex items-center justify-center">
-              <Trophy className="w-6 h-6 text-slate-950" />
+            <div className="bg-gradient-to-tr from-sky-500 to-purple-600 p-2.5 rounded-xl shadow-lg flex items-center justify-center">
+              <Trophy className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight bg-gradient-to-r from-sky-300 via-indigo-200 to-purple-400 bg-clip-text text-transparent">
+              <h1 className="text-xl font-bold tracking-tight bg-gradient-to-r from-sky-600 via-indigo-600 to-purple-700 bg-clip-text text-transparent">
                 Tennis Arena
               </h1>
-              <span className="text-xs font-mono text-slate-400">HIGH-RETIINA STYLIZED SPORTS ENGINE</span>
+              <span className="text-xs font-mono text-slate-500">HI-RES STYLIZED LINGERIE SPORTS BUILD</span>
             </div>
           </div>
 
-          <div className="flex items-center space-x-3 font-mono text-xs text-slate-400 bg-slate-950 px-4 py-2 rounded-lg border border-slate-800">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+          <div className="flex items-center space-x-3 font-mono text-xs text-slate-600 bg-slate-100 px-4 py-2 rounded-lg border border-slate-200/80">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <span>SYSTEM ENHANCED PREVIEW</span>
-            <span className="border-l border-slate-800 pl-3">v1.4.2</span>
+            <span className="border-l border-slate-300 pl-3">v1.4.2</span>
           </div>
 
           <div className="flex items-center space-x-3">
@@ -468,8 +462,8 @@ export default function App() {
               }}
               className={`p-2.5 rounded-lg border transition-all ${
                 soundEnabled 
-                  ? 'bg-sky-500/10 border-sky-500/20 text-sky-400 hover:bg-sky-500/20' 
-                  : 'bg-slate-800/40 border-slate-700/30 text-slate-500 hover:bg-slate-800/70'
+                  ? 'bg-sky-500/10 border-sky-500/20 text-sky-600 hover:bg-sky-500/20' 
+                  : 'bg-slate-200/60 border-slate-300 text-slate-400 hover:bg-slate-200/90'
               }`}
               title="Tovushlarni yoqish/oʻchirish"
               id="btn_sound"
@@ -481,10 +475,10 @@ export default function App() {
                 setShowTutorial(!showTutorial);
                 triggerSound('select');
               }}
-              className="p-2.5 font-mono text-xs rounded-lg border border-slate-800 bg-slate-900 hover:bg-slate-800 transition-colors flex items-center space-x-1"
+              className="p-2.5 font-mono text-xs rounded-lg border border-slate-200 bg-white hover:bg-slate-50 transition-colors flex items-center space-x-1 text-slate-700 shadow-sm"
               id="btn_tutorial"
             >
-              <HelpCircle className="w-4 h-4 text-slate-400" />
+              <HelpCircle className="w-4 h-4 text-slate-500" />
               <span>Yo'riqnoma</span>
             </button>
           </div>
@@ -506,24 +500,24 @@ export default function App() {
               id="menu_view"
             >
               {/* Grand Banner */}
-              <div className="mb-8 relative rounded-2xl overflow-hidden border border-slate-800 max-w-2xl mx-auto shadow-2xl">
+              <div className="mb-8 relative rounded-2xl overflow-hidden border border-slate-200 max-w-2xl mx-auto shadow-xl">
                 <img
                   src={TENNIS_COURT_BG}
                   alt="Futuristic neon court"
-                  className="w-full h-44 object-cover object-center opacity-80 brightness-90 filter contrast-125"
+                  className="w-full h-44 object-cover object-center opacity-90 brightness-110 filter contrast-105"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent flex flex-col justify-end p-6 text-left">
-                  <span className="text-xs font-mono text-sky-400 uppercase tracking-widest mb-1.5">CHAMPIONSHIP TOUR</span>
-                  <h2 className="text-3xl font-black italic tracking-wide text-white uppercase sm:text-4xl text-shadow-md">
+                <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent flex flex-col justify-end p-6 text-left">
+                  <span className="text-xs font-mono text-sky-600 uppercase tracking-widest mb-1.5 font-bold">CHAMPIONSHIP TOUR</span>
+                  <h2 className="text-3xl font-black italic tracking-wide text-slate-900 uppercase sm:text-4xl">
                     CYBER STYLED VOLLEY
                   </h2>
                 </div>
               </div>
 
               <div className="mb-6 max-w-xl mx-auto">
-                <p className="text-slate-300 text-sm md:text-base leading-relaxed">
-                  O'yin tennisining ajoyib qizg'in analogiga xush kelibsiz! Har bir personaj yuqori darajada ishlangan bo'lib, o'ziga xos ichki kiyim/suzish kiyimi (<span className="text-sky-300">lingerie / swimwear style description</span>) va individual o'yin ko'rsatkichlariga ega.
+                <p className="text-slate-700 text-sm md:text-base leading-relaxed">
+                  O'yin tennisining ajoyib qizg'in analogiga xush kelibsiz! Har bir personaj yuqori darajada ishlangan bo'lib, o'ziga xos jozibali ichki kiyim/suzish kiyimi (<span className="text-sky-600 font-semibold text-shadow-sm">lingerie / swimwear style description</span>) va individual o'yin ko'rsatkichlariga ega.
                 </p>
               </div>
 
@@ -532,39 +526,39 @@ export default function App() {
                 {CHARACTERS.map((char) => (
                   <div
                     key={char.id}
-                    className="bg-slate-900/60 border border-slate-800 rounded-xl p-4 flex flex-col hover:border-slate-700/60 transition-all relative overflow-hidden group shadow-lg"
+                    className="bg-white border border-slate-200 rounded-xl p-4 flex flex-col hover:border-slate-350 hover:shadow-md transition-all relative overflow-hidden group shadow-sm"
                   >
-                    <div className="h-44 rounded-lg overflow-hidden bg-slate-950 mb-3 relative">
+                    <div className="h-44 rounded-lg overflow-hidden bg-slate-50 mb-3 relative border border-slate-100">
                       <img
                         src={char.imageUrl}
                         alt={char.name}
-                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover object-top group-hover:scale-103 transition-transform duration-500"
                         referrerPolicy="no-referrer"
                       />
-                      <div className="absolute bottom-0 inset-x-0 bg-slate-950/80 p-2 text-[11px] font-mono border-t border-slate-800/80 text-center">
-                        <span className="text-amber-300 font-bold">{char.name}</span>
+                      <div className="absolute bottom-0 inset-x-0 bg-white/90 p-2 text-[11px] font-mono border-t border-slate-100 text-center">
+                        <span className="text-amber-600 font-bold">{char.name}</span>
                       </div>
                     </div>
                     <div className="flex-grow">
-                      <h3 className="text-sm font-semibold mb-1 text-slate-100 flex items-center justify-between">
+                      <h3 className="text-sm font-bold mb-1 text-slate-800 flex items-center justify-between">
                         <span>{char.name.split(' "')[0]}</span>
-                        <span className="text-xs text-slate-400 font-mono italic">Style</span>
+                        <span className="text-xs text-slate-500 font-mono italic">Style</span>
                       </h3>
-                      <p className="text-xs text-slate-400 line-clamp-3 mb-2 leading-relaxed">
+                      <p className="text-xs text-slate-600 line-clamp-3 mb-2 leading-relaxed font-sans">
                         {char.description}
                       </p>
-                      <div className="border-t border-slate-800 mt-2 pt-2 space-y-1">
+                      <div className="border-t border-slate-150 mt-2 pt-2 space-y-1">
                         <div className="flex justify-between items-center text-[10px] font-mono">
                           <span className="text-slate-500">Tezlik</span>
-                          <span className="text-sky-300 font-bold">{(char.speed * 10).toFixed(1)}</span>
+                          <span className="text-sky-600 font-bold">{(char.speed * 10).toFixed(1)}</span>
                         </div>
                         <div className="flex justify-between items-center text-[10px] font-mono">
                           <span className="text-slate-500">Kuch</span>
-                          <span className="text-purple-400 font-bold">{(char.power * 10).toFixed(1)}</span>
+                          <span className="text-purple-600 font-bold">{(char.power * 10).toFixed(1)}</span>
                         </div>
                         <div className="flex justify-between items-center text-[10px] font-mono">
                           <span className="text-slate-500">Krivizna (Spin)</span>
-                          <span className="text-amber-400 font-bold">{(char.curve * 10).toFixed(1)}</span>
+                          <span className="text-amber-600 font-bold">{(char.curve * 10).toFixed(1)}</span>
                         </div>
                       </div>
                     </div>
@@ -579,7 +573,7 @@ export default function App() {
                     setGameState(prev => ({ ...prev, gameState: 'CHARACTER_SELECT' }));
                     triggerSound('select');
                   }}
-                  className="w-full bg-gradient-to-r from-sky-400 to-indigo-500 hover:from-sky-300 hover:to-indigo-400 text-slate-950 font-bold py-4 px-8 rounded-xl transition-all font-mono tracking-wider flex items-center justify-center space-x-2 shadow-lg shadow-sky-500/20 group hover:scale-[1.02]"
+                  className="w-full bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-450 hover:to-indigo-500 text-white font-bold py-4 px-8 rounded-xl transition-all font-mono tracking-wider flex items-center justify-center space-x-2 shadow-lg shadow-sky-500/10 group hover:scale-[1.02] cursor-pointer"
                   id="btn_start_match"
                 >
                   <span>MUSHINGIZNI BOSHLASH</span>
@@ -600,22 +594,22 @@ export default function App() {
               id="char_select_view"
             >
               <div className="text-center mb-8">
-                <span className="text-xs font-mono text-indigo-400 uppercase tracking-widest bg-indigo-950/40 border border-indigo-900/40 px-3 py-1 rounded-full">ARENA SELECTION MODE</span>
-                <h2 className="text-3xl font-black italic tracking-tight text-white mt-3">Raqibingiz va O'g'lingizni Tanlang</h2>
-                <p className="text-slate-400 text-sm mt-1">Har bir tennischi qizaloq chiroyli va o'ziga xos ichki kiyim uslubi va maxsus o'yin ko'rsatkichlariga ega.</p>
+                <span className="text-xs font-mono text-indigo-600 uppercase tracking-widest bg-indigo-50 border border-indigo-100 px-3 py-1 rounded-full font-bold">ARENA SELECTION MODE</span>
+                <h2 className="text-3xl font-black italic tracking-tight text-slate-800 mt-3">Raqibingiz va O'g'lingizni Tanlang</h2>
+                <p className="text-slate-600 text-sm mt-1">Har bir tennischi qizaloq chiroyli va o'ziga xos jozibali ichki kiyim uslubi va maxsus o'yin ko'rsatkichlariga ega.</p>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                 
                 {/* 1. Player Character Customizer Box */}
-                <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 relative flex flex-col justify-between">
-                  <div className="absolute top-4 left-4 bg-gradient-to-r from-sky-500 to-indigo-500 text-slate-950 text-xs font-mono font-black italic uppercase px-3 py-1 rounded-md shadow-sm">
+                <div className="bg-white border border-slate-200 rounded-2xl p-6 relative flex flex-col justify-between shadow-sm">
+                  <div className="absolute top-4 left-4 bg-gradient-to-r from-sky-500 to-indigo-600 text-white text-xs font-mono font-black italic uppercase px-3 py-1 rounded-md shadow-sm">
                     Sizning Qahramoningiz
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-6 mt-4">
                     {/* Character Card Visual */}
-                    <div className="w-full sm:w-1/2 rounded-xl overflow-hidden bg-slate-950 border border-slate-800 relative h-72">
+                    <div className="w-full sm:w-1/2 rounded-xl overflow-hidden bg-slate-50 border border-slate-200 relative h-72">
                       {gameState.selectedPlayer && (
                         <>
                           <img
@@ -624,9 +618,9 @@ export default function App() {
                             className="w-full h-full object-cover object-top"
                             referrerPolicy="no-referrer"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent flex flex-col justify-end p-4">
-                            <span className="text-[10px] text-sky-400 font-mono uppercase font-bold tracking-widest">{gameState.selectedPlayer.underwearStyle ? 'Outfit Preview' : ''}</span>
-                            <span className="text-lg font-black italic text-white leading-normal">{gameState.selectedPlayer.name}</span>
+                          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/10 to-transparent flex flex-col justify-end p-4">
+                            <span className="text-[10px] text-sky-600 font-mono uppercase font-bold tracking-widest">{gameState.selectedPlayer.underwearStyle ? 'Outfit Preview' : ''}</span>
+                            <span className="text-lg font-black italic text-slate-900 leading-normal">{gameState.selectedPlayer.name}</span>
                           </div>
                         </>
                       )}
@@ -635,7 +629,7 @@ export default function App() {
                     {/* Character Attributes and Style Description */}
                     <div className="w-full sm:w-1/2 flex flex-col justify-between">
                       <div>
-                        <h3 className="text-slate-400 font-mono text-xs uppercase tracking-wider mb-2">Tanlov ro'yxati:</h3>
+                        <h3 className="text-slate-500 font-mono text-xs uppercase tracking-wider mb-2">Tanlov ro'yxati:</h3>
                         <div className="grid grid-cols-3 gap-2 mb-4">
                           {CHARACTERS.map(c => (
                             <button
@@ -644,10 +638,10 @@ export default function App() {
                                 setGameState(prev => ({ ...prev, selectedPlayer: c }));
                                 triggerSound('select');
                               }}
-                              className={`py-1 px-2 font-mono text-[10px] uppercase font-bold border rounded-lg transition-all ${
+                              className={`py-1 px-2 font-mono text-[10px] uppercase font-bold border rounded-lg transition-all cursor-pointer ${
                                 gameState.selectedPlayer?.id === c.id
-                                  ? 'bg-sky-500/20 border-sky-400 text-sky-300 shadow-sm'
-                                  : 'bg-slate-950 border-slate-850 text-slate-400 hover:border-slate-700'
+                                  ? 'bg-sky-50 border-sky-500 text-sky-600 shadow-sm'
+                                  : 'bg-white border-slate-200 text-slate-500 hover:border-slate-350 hover:bg-slate-50'
                               }`}
                             >
                               {c.id}
@@ -656,16 +650,16 @@ export default function App() {
                         </div>
 
                         {gameState.selectedPlayer && (
-                          <div className="space-y-3 bg-slate-950/80 p-4 rounded-xl border border-slate-800">
+                          <div className="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-150">
                             <div>
-                              <span className="text-[10px] font-mono text-cyan-400 font-semibold uppercase tracking-wider">Ichki kiyim kroyi & uslubi:</span>
-                              <p className="text-xs text-slate-300 mt-1 italic font-light leading-relaxed">
+                              <span className="text-[10px] font-mono text-sky-600 font-bold uppercase tracking-wider">Ichki kiyim kroyi & uslubi:</span>
+                              <p className="text-xs text-slate-700 mt-1 italic font-light leading-relaxed font-serif">
                                 "{gameState.selectedPlayer.underwearStyle}"
                               </p>
                             </div>
-                            <div className="border-t border-slate-800/80 pt-2">
+                            <div className="border-t border-slate-200 pt-2">
                               <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Alohida Qobiliyati:</span>
-                              <p className="text-[11px] text-slate-400 mt-0.5">{gameState.selectedPlayer.description}</p>
+                              <p className="text-[11px] text-slate-600 mt-0.5">{gameState.selectedPlayer.description}</p>
                             </div>
                           </div>
                         )}
@@ -673,32 +667,32 @@ export default function App() {
 
                       {/* Power Levels Bars */}
                       {gameState.selectedPlayer && (
-                        <div className="space-y-2 mt-4 bg-slate-950/40 p-3 rounded-lg border border-slate-800/50">
+                        <div className="space-y-2 mt-4 bg-slate-50 p-3 rounded-lg border border-slate-150">
                           <div>
-                            <div className="flex justify-between items-center text-[10px] font-mono text-slate-400 mb-1">
+                            <div className="flex justify-between items-center text-[10px] font-mono text-slate-500 mb-1">
                               <span>Tezlik (Speed)</span>
-                              <span className="text-slate-200">{(gameState.selectedPlayer.speed * 10).toFixed(0)}</span>
+                              <span className="text-slate-800 font-bold">{(gameState.selectedPlayer.speed * 10).toFixed(0)}</span>
                             </div>
-                            <div className="w-full bg-slate-850 h-1.5 rounded-full overflow-hidden">
-                              <div className="bg-sky-400 h-full" style={{ width: `${(gameState.selectedPlayer.speed - 0.8) / 0.8 * 100}%` }}></div>
+                            <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                              <div className="bg-sky-500 h-full" style={{ width: `${(gameState.selectedPlayer.speed - 0.8) / 0.8 * 100}%` }}></div>
                             </div>
                           </div>
                           <div>
-                            <div className="flex justify-between items-center text-[10px] font-mono text-slate-400 mb-1">
+                            <div className="flex justify-between items-center text-[10px] font-mono text-slate-500 mb-1">
                               <span>Zarba Kuchi (Hit Power)</span>
-                              <span className="text-slate-200">{(gameState.selectedPlayer.power * 10).toFixed(0)}</span>
+                              <span className="text-slate-800 font-bold">{(gameState.selectedPlayer.power * 10).toFixed(0)}</span>
                             </div>
-                            <div className="w-full bg-slate-850 h-1.5 rounded-full overflow-hidden">
-                              <div className="bg-indigo-400 h-full" style={{ width: `${(gameState.selectedPlayer.power - 0.8) / 0.8 * 100}%` }}></div>
+                            <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                              <div className="bg-indigo-500 h-full" style={{ width: `${(gameState.selectedPlayer.power - 0.8) / 0.8 * 100}%` }}></div>
                             </div>
                           </div>
                           <div>
-                            <div className="flex justify-between items-center text-[10px] font-mono text-slate-400 mb-1">
+                            <div className="flex justify-between items-center text-[10px] font-mono text-slate-500 mb-1">
                               <span>Aylantirish (Spin Accuracy)</span>
-                              <span className="text-slate-200">{(gameState.selectedPlayer.curve * 10).toFixed(0)}</span>
+                              <span className="text-slate-800 font-bold">{(gameState.selectedPlayer.curve * 10).toFixed(0)}</span>
                             </div>
-                            <div className="w-full bg-slate-850 h-1.5 rounded-full overflow-hidden">
-                              <div className="bg-amber-400 h-full" style={{ width: `${(gameState.selectedPlayer.curve - 0.8) / 0.8 * 100}%` }}></div>
+                            <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                              <div className="bg-amber-500 h-full" style={{ width: `${(gameState.selectedPlayer.curve - 0.8) / 0.8 * 100}%` }}></div>
                             </div>
                           </div>
                         </div>
@@ -708,14 +702,14 @@ export default function App() {
                 </div>
 
                 {/* 2. Opponent Character Selection Box */}
-                <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 relative flex flex-col justify-between">
-                  <div className="absolute top-4 left-4 bg-gradient-to-r from-purple-500 to-pink-500 text-slate-950 text-xs font-mono font-black italic uppercase px-3 py-1 rounded-md shadow-sm">
+                <div className="bg-white border border-slate-200 rounded-2xl p-6 relative flex flex-col justify-between shadow-sm">
+                  <div className="absolute top-4 left-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-mono font-black italic uppercase px-3 py-1 rounded-md shadow-sm">
                     Raqibingiz <span className="text-[10px] font-normal underline">(AI boshqaradi)</span>
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-6 mt-4">
                     {/* Character Card Artwork */}
-                    <div className="w-full sm:w-1/2 rounded-xl overflow-hidden bg-slate-950 border border-slate-800 relative h-72">
+                    <div className="w-full sm:w-1/2 rounded-xl overflow-hidden bg-slate-50 border border-slate-200 relative h-72">
                       {gameState.selectedOpponent && (
                         <>
                           <img
@@ -724,9 +718,9 @@ export default function App() {
                             className="w-full h-full object-cover object-top"
                             referrerPolicy="no-referrer"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent flex flex-col justify-end p-4">
-                            <span className="text-[10px] text-purple-400 font-mono uppercase font-bold tracking-widest">{gameState.selectedOpponent.underwearStyle ? 'Outfit Preview' : ''}</span>
-                            <span className="text-lg font-black italic text-white leading-normal">{gameState.selectedOpponent.name}</span>
+                          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/10 to-transparent flex flex-col justify-end p-4">
+                            <span className="text-[10px] text-purple-600 font-mono uppercase font-bold tracking-widest">{gameState.selectedOpponent.underwearStyle ? 'Outfit Preview' : ''}</span>
+                            <span className="text-lg font-black italic text-slate-900 leading-normal">{gameState.selectedOpponent.name}</span>
                           </div>
                         </>
                       )}
@@ -735,7 +729,7 @@ export default function App() {
                     {/* Character info stats and style description */}
                     <div className="w-full sm:w-1/2 flex flex-col justify-between">
                       <div>
-                        <h3 className="text-slate-400 font-mono text-xs uppercase tracking-wider mb-2">Birini tanlang:</h3>
+                        <h3 className="text-slate-500 font-mono text-xs uppercase tracking-wider mb-2">Birini tanlang:</h3>
                         <div className="grid grid-cols-3 gap-2 mb-4">
                           {CHARACTERS.map(c => (
                             <button
@@ -744,10 +738,10 @@ export default function App() {
                                 setGameState(prev => ({ ...prev, selectedOpponent: c }));
                                 triggerSound('select');
                               }}
-                              className={`py-1 px-2 font-mono text-[10px] uppercase font-bold border rounded-lg transition-all ${
+                              className={`py-1 px-2 font-mono text-[10px] uppercase font-bold border rounded-lg transition-all cursor-pointer ${
                                 gameState.selectedOpponent?.id === c.id
-                                  ? 'bg-purple-500/20 border-purple-400 text-purple-300 shadow-sm'
-                                  : 'bg-slate-950 border-slate-850 text-slate-400 hover:border-slate-700'
+                                  ? 'bg-purple-50 border-purple-500 text-purple-600 shadow-sm'
+                                  : 'bg-white border-slate-200 text-slate-500 hover:border-slate-350 hover:bg-slate-50'
                               }`}
                             >
                               {c.id}
@@ -756,16 +750,16 @@ export default function App() {
                         </div>
 
                         {gameState.selectedOpponent && (
-                          <div className="space-y-3 bg-slate-950/80 p-4 rounded-xl border border-slate-800">
+                          <div className="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-150">
                             <div>
-                              <span className="text-[10px] font-mono text-purple-400 font-semibold uppercase tracking-wider">Ichki kiyim kroyi & uslubi:</span>
-                              <p className="text-xs text-slate-300 mt-1 italic font-light leading-relaxed">
+                              <span className="text-[10px] font-mono text-purple-600 font-bold uppercase tracking-wider">Ichki kiyim kroyi & uslubi:</span>
+                              <p className="text-xs text-slate-700 mt-1 italic font-light leading-relaxed font-serif">
                                 "{gameState.selectedOpponent.underwearStyle}"
                               </p>
                             </div>
-                            <div className="border-t border-slate-800/80 pt-2">
+                            <div className="border-t border-slate-200 pt-2">
                               <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Alohida Qobiliyati:</span>
-                              <p className="text-[11px] text-slate-400 mt-0.5">{gameState.selectedOpponent.description}</p>
+                              <p className="text-[11px] text-slate-600 mt-0.5">{gameState.selectedOpponent.description}</p>
                             </div>
                           </div>
                         )}
@@ -773,32 +767,32 @@ export default function App() {
 
                       {/* Opponent Power Levels */}
                       {gameState.selectedOpponent && (
-                        <div className="space-y-2 mt-4 bg-slate-950/40 p-3 rounded-lg border border-slate-800/50">
+                        <div className="space-y-2 mt-4 bg-slate-50 p-3 rounded-lg border border-slate-150">
                           <div>
-                            <div className="flex justify-between items-center text-[10px] font-mono text-slate-400 mb-1">
+                            <div className="flex justify-between items-center text-[10px] font-mono text-slate-500 mb-1">
                               <span>Tezlik (Speed)</span>
-                              <span className="text-slate-200">{(gameState.selectedOpponent.speed * 10).toFixed(0)}</span>
+                              <span className="text-slate-800 font-bold">{(gameState.selectedOpponent.speed * 10).toFixed(0)}</span>
                             </div>
-                            <div className="w-full bg-slate-850 h-1.5 rounded-full overflow-hidden">
-                              <div className="bg-purple-400 h-full" style={{ width: `${(gameState.selectedOpponent.speed - 0.8) / 0.8 * 100}%` }}></div>
+                            <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                              <div className="bg-purple-505 h-full opacity-80" style={{ width: `${(gameState.selectedOpponent.speed - 0.8) / 0.8 * 100}%`, backgroundColor: '#a855f7' }}></div>
                             </div>
                           </div>
                           <div>
-                            <div className="flex justify-between items-center text-[10px] font-mono text-slate-400 mb-1">
+                            <div className="flex justify-between items-center text-[10px] font-mono text-slate-500 mb-1">
                               <span>Zarba Kuchi (Hit Power)</span>
-                              <span className="text-slate-200">{(gameState.selectedOpponent.power * 10).toFixed(0)}</span>
+                              <span className="text-slate-800 font-bold">{(gameState.selectedOpponent.power * 10).toFixed(0)}</span>
                             </div>
-                            <div className="w-full bg-slate-850 h-1.5 rounded-full overflow-hidden">
-                              <div className="bg-purple-400 h-full" style={{ width: `${(gameState.selectedOpponent.power - 0.8) / 0.8 * 100}%` }}></div>
+                            <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                              <div className="bg-purple-505 h-full opacity-80" style={{ width: `${(gameState.selectedOpponent.power - 0.8) / 0.8 * 100}%`, backgroundColor: '#a855f7' }}></div>
                             </div>
                           </div>
                           <div>
-                            <div className="flex justify-between items-center text-[10px] font-mono text-slate-400 mb-1">
+                            <div className="flex justify-between items-center text-[10px] font-mono text-slate-500 mb-1">
                               <span>Aylantirish (Spin Accuracy)</span>
-                              <span className="text-slate-200">{(gameState.selectedOpponent.curve * 10).toFixed(0)}</span>
+                              <span className="text-slate-800 font-bold">{(gameState.selectedOpponent.curve * 10).toFixed(0)}</span>
                             </div>
-                            <div className="w-full bg-slate-850 h-1.5 rounded-full overflow-hidden">
-                              <div className="bg-purple-400 h-full" style={{ width: `${(gameState.selectedOpponent.curve - 0.8) / 0.8 * 100}%` }}></div>
+                            <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                              <div className="bg-purple-505 h-full opacity-80" style={{ width: `${(gameState.selectedOpponent.curve - 0.8) / 0.8 * 100}%`, backgroundColor: '#a855f7' }}></div>
                             </div>
                           </div>
                         </div>
@@ -810,10 +804,10 @@ export default function App() {
               </div>
 
               {/* Match Settings Panel & CTA Start Match */}
-              <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 max-w-4xl mx-auto">
+              <div className="bg-white border border-slate-200 p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 max-w-4xl mx-auto shadow-sm">
                 {/* Match Difficulty toggle selectors */}
                 <div>
-                  <h4 className="text-xs font-mono uppercase text-slate-400 tracking-wider mb-2">Qiyinchilik darajasini aniqlang:</h4>
+                  <h4 className="text-xs font-mono uppercase text-slate-500 tracking-wider mb-2 font-bold">Qiyinchilik darajasini aniqlang:</h4>
                   <div className="flex space-x-2">
                     {['EASY', 'MEDIUM', 'HARD'].map((diff) => (
                       <button
@@ -822,10 +816,10 @@ export default function App() {
                           setGameState(prev => ({ ...prev, matchDifficulty: diff as any }));
                           triggerSound('select');
                         }}
-                        className={`px-4 py-2 font-mono text-xs uppercase font-bold border rounded-lg transition-all ${
+                        className={`px-4 py-2 font-mono text-xs uppercase font-bold border rounded-lg transition-all cursor-pointer ${
                           gameState.matchDifficulty === diff
                             ? 'bg-amber-400 text-slate-950 border-amber-300 font-extrabold shadow-md'
-                            : 'bg-slate-950 border-slate-80) text-slate-400 hover:border-slate-700'
+                            : 'bg-white border-slate-200 text-slate-600 hover:border-slate-350 hover:bg-slate-50'
                         }`}
                       >
                         {diff === 'EASY' ? 'Oson' : diff === 'MEDIUM' ? 'O\'rta' : 'Qiyin'}
@@ -840,7 +834,7 @@ export default function App() {
                       setGameState(prev => ({ ...prev, gameState: 'MENU' }));
                       triggerSound('select');
                     }}
-                    className="w-1/2 md:w-auto px-6 py-3.5 border border-slate-800 bg-slate-950 hover:bg-slate-850 font-mono text-xs uppercase rounded-xl transition-colors text-slate-400"
+                    className="w-1/2 md:w-auto px-6 py-3.5 border border-slate-250 bg-white hover:bg-slate-50 font-mono text-xs uppercase rounded-xl transition-colors text-slate-600 cursor-pointer"
                   >
                     Orqaga
                   </button>
@@ -856,7 +850,7 @@ export default function App() {
                       resetRound('PLAYER');
                       triggerSound('select');
                     }}
-                    className="w-1/2 md:w-auto px-10 py-3.5 bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-extrabold tracking-wider font-mono text-xs uppercase rounded-xl shadow-lg shadow-emerald-500/20"
+                    className="w-1/2 md:w-auto px-10 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-450 hover:to-teal-500 text-white font-extrabold tracking-wider font-mono text-xs uppercase rounded-xl shadow-lg shadow-emerald-500/10 cursor-pointer"
                     id="btn_arena_init"
                   >
                     KORTGA CHIQISH
@@ -878,12 +872,12 @@ export default function App() {
             >
               
               {/* Scoreboard Widget HUD */}
-              <div className="grid grid-cols-3 bg-slate-900 border border-slate-800 rounded-2xl p-4 mb-4 items-center shadow-lg relative overflow-hidden">
+              <div className="grid grid-cols-3 bg-white border border-slate-200 rounded-2xl p-4 mb-4 items-center shadow-md relative overflow-hidden" id="hud_scoreboard">
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-500/5 to-transparent pointer-events-none"></div>
 
                 {/* Left Side: Selected Player HUD */}
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-950 border border-slate-850 relative">
+                  <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-50 border border-slate-200 relative shadow-sm">
                     <img
                       src={gameState.selectedPlayer?.imageUrl}
                       alt={gameState.selectedPlayer?.name}
@@ -892,9 +886,9 @@ export default function App() {
                     />
                   </div>
                   <div>
-                    <h3 className="text-sm font-black italic text-sky-400">{gameState.selectedPlayer?.name.split(' "')[0]}</h3>
-                    <span className="text-[10px] font-mono text-slate-400 flex items-center space-x-1">
-                      <User className="w-3 h-3 inline text-slate-500" />
+                    <h3 className="text-sm font-black italic text-sky-650" style={{ color: '#0284c7' }}>{gameState.selectedPlayer?.name.split(' "')[0]}</h3>
+                    <span className="text-[10px] font-mono text-slate-500 flex items-center space-x-1">
+                      <User className="w-3 h-3 inline text-slate-400" />
                       <span className="truncate max-w-[120px]">{gameState.selectedPlayer?.underwearStyle.slice(0, 20)}...</span>
                     </span>
                   </div>
@@ -903,25 +897,25 @@ export default function App() {
                 {/* Center Dynamic HUD: Rallies and Global Scores */}
                 <div className="text-center">
                   <div className="flex items-center justify-center space-x-6">
-                    <span className="text-3xl font-black font-mono text-sky-400 leading-none">{gameState.playerScore}</span>
-                    <span className="text-xs font-mono text-slate-500 border border-slate-800 bg-slate-950 px-2   py-1 rounded-md">VS</span>
-                    <span className="text-3xl font-black font-mono text-purple-400 leading-none">{gameState.opponentScore}</span>
+                    <span className="text-3xl font-black font-mono text-sky-600 leading-none">{gameState.playerScore}</span>
+                    <span className="text-xs font-mono text-slate-400 border border-slate-200 bg-slate-50 px-2 py-1 rounded-md font-bold">VS</span>
+                    <span className="text-3xl font-black font-mono text-purple-600 leading-none">{gameState.opponentScore}</span>
                   </div>
-                  <div className="text-[10px] font-mono text-slate-400 mt-2 bg-slate-950 border border-slate-800 rounded-full inline-block px-3 py-0.5">
-                    Ralli: <span className="text-amber-400 font-bold">{gameState.rallyCount}</span>
+                  <div className="text-[10px] font-mono text-slate-600 mt-2 bg-slate-100 border border-slate-200 rounded-full inline-block px-3 py-0.5">
+                    Ralli: <span className="text-amber-600 font-bold">{gameState.rallyCount}</span>
                   </div>
                 </div>
 
                 {/* Right Side: Opponent AI Player HUD */}
                 <div className="flex items-center justify-end space-x-3">
                   <div className="text-right">
-                    <h3 className="text-sm font-black italic text-purple-400">{gameState.selectedOpponent?.name.split(' "')[0]}</h3>
-                    <span className="text-[10px] font-mono text-slate-400 flex justify-end items-center space-x-1">
+                    <h3 className="text-sm font-black italic text-purple-600">{gameState.selectedOpponent?.name.split(' "')[0]}</h3>
+                    <span className="text-[10px] font-mono text-slate-500 flex justify-end items-center space-x-1">
                       <span className="truncate max-w-[120px]">{gameState.selectedOpponent?.underwearStyle.slice(0, 20)}...</span>
-                      <Activity className="w-3 h-3 inline text-slate-500" />
+                      <Activity className="w-3 h-3 inline text-slate-400" />
                     </span>
                   </div>
-                  <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-950 border border-slate-850 relative">
+                  <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-50 border border-slate-200 relative shadow-sm">
                     <img
                       src={gameState.selectedOpponent?.imageUrl}
                       alt={gameState.selectedOpponent?.name}
@@ -941,7 +935,7 @@ export default function App() {
                     ref={containerRef}
                     onMouseMove={handleMouseMove}
                     onTouchMove={handleTouchMove}
-                    className="relative w-full aspect-[8/5] bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden cursor-crosshair group shadow-inner max-w-4xl mx-auto"
+                    className="relative w-full aspect-[8/5] bg-white border border-slate-200 rounded-2xl overflow-hidden cursor-crosshair group shadow-md max-w-4xl mx-auto"
                     id="canvas_stage_frame"
                   >
                     <canvas
@@ -953,13 +947,13 @@ export default function App() {
 
                     {/* Overlay: Initial Serve Button CTA */}
                     {isServing && (
-                      <div className="absolute inset-0 bg-slate-950/80 flex flex-col items-center justify-center p-6 text-center z-20 backdrop-blur-sm">
-                        <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-2xl max-w-sm">
-                          <Activity className="w-12 h-12 text-amber-400 mx-auto animate-pulse mb-3" />
-                          <h4 className="text-lg font-bold text-white mb-2 font-mono">
+                      <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center p-6 text-center z-20 backdrop-blur-sm">
+                        <div className="bg-slate-50 border border-slate-200 p-6 rounded-2xl shadow-xl max-w-sm">
+                          <Activity className="w-12 h-12 text-amber-500 mx-auto animate-pulse mb-3" />
+                          <h4 className="text-lg font-bold text-slate-800 mb-2 font-mono">
                             {gameState.serveTurn === 'PLAYER' ? 'Sizning to\'pingiz' : 'Raqibning to\'pi'}
                           </h4>
-                          <p className="text-slate-400 text-xs mb-4">
+                          <p className="text-slate-500 text-xs mb-4">
                             {gameState.serveTurn === 'PLAYER' 
                               ? 'To\'pni kiritish uchun quydagi tugmani bosing yoki SPACE / ENTER tugmalaridan foydalaning.' 
                               : 'AI to\'pni kiritmoqda, e\'tiborli bo\'ling.'}
@@ -968,7 +962,7 @@ export default function App() {
                           {gameState.serveTurn === 'PLAYER' ? (
                             <button
                               onClick={serveBall}
-                              className="w-full py-3 bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 font-black font-mono tracking-wider text-xs uppercase rounded-xl transition-all shadow-md shadow-amber-500/10 active:scale-95"
+                              className="w-full py-3 bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-450 hover:to-orange-450 text-slate-950 font-black font-mono tracking-wider text-xs uppercase rounded-xl transition-all shadow-md active:scale-95 cursor-pointer"
                               id="btn_serve"
                             >
                               SERVIS ETISH
@@ -976,7 +970,7 @@ export default function App() {
                           ) : (
                             <button
                               onClick={serveBall}
-                              className="w-full py-3 bg-slate-800 text-slate-100 font-bold border border-slate-700 font-mono text-xs uppercase rounded-xl animate-pulse"
+                              className="w-full py-3 bg-slate-200 text-slate-800 font-bold border border-slate-350 font-mono text-xs uppercase rounded-xl animate-pulse cursor-pointer"
                               id="btn_ai_serve"
                             >
                               KUTIB OLISH
@@ -988,18 +982,18 @@ export default function App() {
                   </div>
 
                   {/* Controller Instructions Footer bar inside arena */}
-                  <div className="mt-4 flex flex-wrap gap-4 justify-between items-center bg-slate-900/60 border border-slate-800/80 p-4 rounded-xl text-xs font-mono text-slate-400">
+                  <div className="mt-4 flex flex-wrap gap-4 justify-between items-center bg-white border border-slate-200 p-4 rounded-xl text-xs font-mono text-slate-600 shadow-sm">
                     <div className="flex items-center space-x-3">
-                      <span className="font-bold text-slate-300 uppercase">Boshqarish:</span>
+                      <span className="font-bold text-slate-800 uppercase">Boshqarish:</span>
                       <span>Sichqonchani yurgizish / Sensorli ekran</span>
-                      <span className="text-slate-700">|</span>
-                      <span>Klaviaturada: <kbd className="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-[10px] text-slate-200">W</kbd> or <kbd className="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-[10px] text-slate-200">↑</kbd> va <kbd className="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-[10px] text-slate-200">S</kbd> or <kbd className="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-[10px] text-slate-200">↓</kbd></span>
+                      <span className="text-slate-300">|</span>
+                      <span>Klaviaturada: <kbd className="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700">W</kbd> yoki <kbd className="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700">↑</kbd> va <kbd className="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700">S</kbd> yoki <kbd className="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] text-slate-700">↓</kbd></span>
                     </div>
 
                     <div className="flex space-x-3">
                       <button
                         onClick={resetEntireMatch}
-                        className="px-3 py-1.5 border border-slate-800 hover:border-slate-700 text-red-400 hover:bg-slate-950 rounded transition-all flex items-center space-x-1 uppercase"
+                        className="px-3 py-1.5 border border-slate-200 hover:border-slate-300 text-red-600 hover:bg-slate-50 rounded transition-all flex items-center space-x-1 uppercase font-bold cursor-pointer"
                         id="btn_quit"
                       >
                         <RotateCcw className="w-3.5 h-3.5" />
@@ -1012,10 +1006,10 @@ export default function App() {
                 {/* 2. Right side info detailing matching statistics & character swimwear specifications */}
                 <div className="w-full lg:w-72 flex flex-col gap-4">
                   {/* Active Player Live Card Display */}
-                  <div className="bg-slate-900/60 border border-slate-850 rounded-2xl p-4 shadow-md flex flex-col justify-between">
+                  <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
                     <div>
-                      <span className="text-[10px] font-mono text-sky-400 uppercase font-black">SIZNING SPORTCHIINGIZ</span>
-                      <div className="h-44 rounded-xl overflow-hidden bg-slate-950 border border-slate-800 my-2 relative">
+                      <span className="text-[10px] font-mono text-sky-600 uppercase font-black">SIZNING SPORTCHIINGIZ</span>
+                      <div className="h-44 rounded-xl overflow-hidden bg-slate-50 border border-slate-150 my-2 relative">
                         <img
                           src={gameState.selectedPlayer?.imageUrl}
                           alt={gameState.selectedPlayer?.name}
@@ -1023,34 +1017,34 @@ export default function App() {
                           referrerPolicy="no-referrer"
                         />
                       </div>
-                      <h4 className="font-bold text-sm text-slate-100">{gameState.selectedPlayer?.name}</h4>
-                      <p className="text-xs text-slate-400 line-clamp-3 mt-1 leading-relaxed">
+                      <h4 className="font-bold text-sm text-slate-800">{gameState.selectedPlayer?.name}</h4>
+                      <p className="text-xs text-slate-600 line-clamp-3 mt-1 leading-relaxed">
                         {gameState.selectedPlayer?.description}
                       </p>
                     </div>
 
-                    <div className="border-t border-slate-800 mt-3 pt-3">
-                      <span className="text-[10px] font-mono text-cyan-400 uppercase font-bold tracking-wider">Ichki kiyim kroyi & uslubi:</span>
-                      <p className="text-xs text-slate-300 leading-relaxed mt-1 italic font-light font-serif">
+                    <div className="border-t border-slate-150 mt-3 pt-3">
+                      <span className="text-[10px] font-mono text-sky-600 uppercase font-bold tracking-wider">Ichki kiyim kroyi & uslubi:</span>
+                      <p className="text-xs text-slate-700 leading-relaxed mt-1 italic font-light font-serif">
                         "{gameState.selectedPlayer?.underwearStyle}"
                       </p>
                     </div>
                   </div>
 
                   {/* Competitive Status dashboard */}
-                  <div className="bg-slate-900/60 border border-slate-850 rounded-2xl p-4 shadow-md text-xs space-y-3 font-mono">
-                    <span className="text-[10px] uppercase font-black text-amber-500 block">KORT XALOTI INFORMASETIYA</span>
-                    <div className="flex justify-between border-b border-slate-800 pb-1.5">
-                      <span className="text-slate-500">Raqib AI qiyinligi:</span>
-                      <span className="text-slate-200 font-bold">{gameState.matchDifficulty === 'EASY' ? 'Oson' : gameState.matchDifficulty === 'MEDIUM' ? 'O\'rta' : 'Qiyin'}</span>
+                  <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm text-xs space-y-3 font-mono">
+                    <span className="text-[10px] uppercase font-black text-amber-600 block">KORT XABARI INFO</span>
+                    <div className="flex justify-between border-b border-slate-100 pb-1.5 text-slate-650">
+                      <span className="text-slate-500">AI qiyinligi:</span>
+                      <span className="text-slate-800 font-bold">{gameState.matchDifficulty === 'EASY' ? 'Oson' : gameState.matchDifficulty === 'MEDIUM' ? 'O\'rta' : 'Qiyin'}</span>
                     </div>
-                    <div className="flex justify-between border-b border-slate-800 pb-1.5">
+                    <div className="flex justify-between border-b border-slate-100 pb-1.5 text-slate-650">
                       <span className="text-slate-500">Raund marrasi:</span>
-                      <span className="text-slate-200 font-bold">11 ochko</span>
+                      <span className="text-slate-800 font-bold">11 ochko</span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between text-slate-655">
                       <span className="text-slate-500">Tezlik ko'rsatkichi:</span>
-                      <span className="text-emerald-400 font-black">{(gameState.ballSpeedMultiplier * 100).toFixed(0)}%</span>
+                      <span className="text-emerald-600 font-black">{(gameState.ballSpeedMultiplier * 100).toFixed(0)}%</span>
                     </div>
                   </div>
                 </div>
@@ -1067,7 +1061,7 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="max-w-2xl w-full text-center relative bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl overflow-hidden"
+              className="max-w-2xl w-full text-center relative bg-white border border-slate-200 rounded-3xl p-8 shadow-xl overflow-hidden"
               id="gameover_view"
             >
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/5 to-transparent pointer-events-none"></div>
@@ -1075,7 +1069,7 @@ export default function App() {
               {/* Character Trophy Celebration Illustration */}
               {gameState.winnerId === gameState.selectedPlayer?.id ? (
                 <div className="mb-6 relative">
-                  <div className="w-32 h-32 rounded-full overflow-hidden mx-auto border-4 border-amber-400 shadow-lg shadow-amber-500/20 bg-slate-950 relative">
+                  <div className="w-32 h-32 rounded-full overflow-hidden mx-auto border-4 border-amber-400 shadow-md bg-slate-50 relative">
                     <img
                       src={gameState.selectedPlayer?.imageUrl}
                       alt="Winner Portrait"
@@ -1084,17 +1078,17 @@ export default function App() {
                     />
                   </div>
                   <div className="mt-4">
-                    <Trophy className="w-12 h-12 text-amber-400 mx-auto animate-bounce mb-2" />
-                    <span className="text-xs font-mono text-amber-400 uppercase tracking-widest font-black">G'alaba Qozondingiz!</span>
-                    <h2 className="text-3xl font-black italic text-white uppercase mt-1">G'ALABA GOLDBOX</h2>
-                    <p className="text-slate-400 text-sm mt-2 max-w-sm mx-auto leading-relaxed">
-                      Sizning tennischingiz <span className="text-sky-300 font-bold">{gameState.selectedPlayer?.name}</span> raqibni mohirlik bilan mag'lubiyatga uchratdi!
+                    <Trophy className="w-12 h-12 text-amber-500 mx-auto animate-bounce mb-2" />
+                    <span className="text-xs font-mono text-amber-600 uppercase tracking-widest font-black">G'alaba Qozondingiz!</span>
+                    <h2 className="text-3xl font-black italic text-slate-800 uppercase mt-1">G'ALABA GOLDBOX</h2>
+                    <p className="text-slate-600 text-sm mt-2 max-w-sm mx-auto leading-relaxed">
+                      Sizning tennischingiz <span className="text-sky-600 font-bold">{gameState.selectedPlayer?.name}</span> raqibni mohirlik bilan mag'lubiyatga uchratdi!
                     </p>
                   </div>
                 </div>
               ) : (
                 <div className="mb-6 relative">
-                  <div className="w-32 h-32 rounded-full overflow-hidden mx-auto border-4 border-slate-700 bg-slate-950 relative grayscale opacity-75">
+                  <div className="w-32 h-32 rounded-full overflow-hidden mx-auto border-4 border-slate-300 bg-slate-50 relative grayscale opacity-75">
                     <img
                       src={gameState.selectedOpponent?.imageUrl}
                       alt="Opponent Winner Portrait"
@@ -1103,28 +1097,28 @@ export default function App() {
                     />
                   </div>
                   <div className="mt-4">
-                    <span className="text-xs font-mono text-red-400 uppercase tracking-widest font-black">Yutqazdingiz</span>
-                    <h2 className="text-3xl font-black italic text-slate-100 uppercase mt-1">YUTQAZDINGIZ</h2>
-                    <p className="text-slate-400 text-sm mt-2 max-w-sm mx-auto leading-relaxed">
-                      Bu safar <span className="text-purple-400 font-bold">{gameState.selectedOpponent?.name}</span> ustunlik qildi. Keyingi safar kuchlar muvozanatini hisobga oling!
+                    <span className="text-xs font-mono text-red-500 uppercase tracking-widest font-black">Yutqazdingiz</span>
+                    <h2 className="text-3xl font-black italic text-slate-800 uppercase mt-1">YUTQAZDINGIZ</h2>
+                    <p className="text-slate-600 text-sm mt-2 max-w-sm mx-auto leading-relaxed">
+                      Bu safar <span className="text-purple-600 font-bold">{gameState.selectedOpponent?.name}</span> ustunlik qildi. Keyingi safar kuchlar muvozanatini hisobga oling!
                     </p>
                   </div>
                 </div>
               )}
 
               {/* Score breakdown metrics display */}
-              <div className="bg-slate-950 rounded-2xl p-4 border border-slate-800/80 max-w-sm mx-auto mb-6">
+              <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200 max-w-sm mx-auto mb-6">
                 <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block mb-2">YAKUNIY PROTOKOL MATCHI</span>
                 <div className="flex justify-between items-center px-4">
                   <div className="text-left">
-                    <span className="text-xs font-mono text-sky-400 font-bold">{gameState.selectedPlayer?.name.split(' "')[0]}</span>
+                    <span className="text-xs font-mono text-sky-600 font-bold">{gameState.selectedPlayer?.name.split(' "')[0]}</span>
                     <span className="block text-[10px] text-slate-500 italic truncate max-w-[120px]">{gameState.selectedPlayer?.underwearStyle.slice(0, 20)}...</span>
                   </div>
-                  <div className="text-lg font-mono font-black text-white">
+                  <div className="text-lg font-mono font-black text-slate-800">
                     {gameState.playerScore} - {gameState.opponentScore}
                   </div>
                   <div className="text-right">
-                    <span className="text-xs font-mono text-purple-400 font-bold">{gameState.selectedOpponent?.name.split(' "')[0]}</span>
+                    <span className="text-xs font-mono text-purple-600 font-bold">{gameState.selectedOpponent?.name.split(' "')[0]}</span>
                     <span className="block text-[10px] text-slate-500 italic truncate max-w-[120px]">{gameState.selectedOpponent?.underwearStyle.slice(0, 20)}...</span>
                   </div>
                 </div>
@@ -1134,7 +1128,7 @@ export default function App() {
               <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto items-center justify-center">
                 <button
                   onClick={resetEntireMatch}
-                  className="w-full sm:w-auto px-10 py-3.5 bg-gradient-to-r from-sky-400 to-indigo-500 hover:from-sky-300 hover:to-indigo-400 text-slate-950 font-black font-mono text-xs tracking-wider uppercase rounded-xl transition-all shadow-md"
+                  className="w-full sm:w-auto px-10 py-3.5 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-450 hover:to-indigo-500 text-white font-black font-mono text-xs tracking-wider uppercase rounded-xl transition-all shadow-md cursor-pointer"
                   id="btn_over_replay"
                 >
                   YANGI O'YIN BOSHLASH
@@ -1148,25 +1142,25 @@ export default function App() {
 
       {/* Tutorial drawer slide-in panel */}
       {showTutorial && (
-        <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4" id="tutorial_screen_modal">
-          <div className="bg-slate-900 border border-slate-800 max-w-lg w-full rounded-2xl p-6 shadow-2xl relative">
-            <h3 className="text-lg font-bold text-white mb-3 font-mono flex items-center space-x-2 border-b border-slate-800 pb-3">
-              <HelpCircle className="w-5 h-5 text-sky-400" />
+        <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4" id="tutorial_screen_modal">
+          <div className="bg-white border border-slate-200 max-w-lg w-full rounded-2xl p-6 shadow-2xl relative">
+            <h3 className="text-lg font-bold text-slate-800 mb-3 font-mono flex items-center space-x-2 border-b border-slate-100 pb-3">
+              <HelpCircle className="w-5 h-5 text-sky-600" />
               <span>O'yin Qoidalari va Yo'riqnomasi</span>
             </h3>
             
-            <div className="space-y-4 text-xs text-slate-300 leading-relaxed text-left">
+            <div className="space-y-4 text-xs text-slate-600 leading-relaxed text-left">
               <div>
-                <span className="font-bold text-sky-400 font-mono text-xs uppercase block">Maqsad:</span>
-                <p className="mt-0.5">O'yin tennisining analogi hisoblanadi. Raketiya bilan to'pni raqib tarafiga yo'naltiring, uning unutilmas zanjirli ball bounce effectlariga moslashib, birinchi bo'lib <strong className="text-slate-100">11 ochko</strong> to'plang!</p>
+                <span className="font-bold text-sky-600 font-mono text-xs uppercase block">Maqsad:</span>
+                <p className="mt-0.5">O'yin tennisining analogi hisoblanadi. Raketa bilan to'pni raqib tarafiga yo'naltiring, uning unutilmas zanjirli ball bounce effectlariga moslashib, birinchi bo'lib <strong className="text-slate-800">11 ochko</strong> to'plang!</p>
               </div>
 
               <div>
-                <span className="font-bold text-indigo-400 font-mono text-xs uppercase block">Boshqaruv tugmalari va qahramonlar:</span>
-                <ul className="list-disc pl-4 space-y-1 mt-1 font-sans text-xs">
+                <span className="font-bold text-indigo-600 font-mono text-xs uppercase block">Boshqaruv tugmalari va qahramonlar:</span>
+                <ul className="list-disc pl-4 space-y-1 mt-1 font-sans text-xs text-slate-650">
                   <li>Sichqoncha yoki sensorni yuqoriga va pastga hovuzda harakatlantirish orqali o'zingizning tennischingiz paddle plitasini boshqarishingiz mumkin.</li>
-                  <li>Keyboard bilan harakatlanish uchun <kbd className="bg-slate-950 border border-slate-800 px-1 py-0.5 text-slate-300 font-mono">W</kbd> / <kbd className="bg-slate-950 border border-slate-800 px-1 py-0.5 text-slate-300 font-mono">↑</kbd> va <kbd className="bg-slate-950 border border-slate-800 px-1 py-0.5 text-slate-300 font-mono">S</kbd> / <kbd className="bg-slate-950 border border-slate-800 px-1 py-0.5 text-slate-300 font-mono">↓</kbd> tugmalaridan foydalaning.</li>
-                  <li>Xizmat koʻrsatish (to'pni serve qilish) uchun esa ekran ustidagi <strong className="text-amber-400">SERVIS ETISH</strong> tugmasini bosing yoki <kbd className="bg-slate-950 border border-slate-800 px-1 py-0.5 text-slate-300 font-mono">Space</kbd> / <kbd className="bg-slate-950 border border-slate-800 px-1 py-0.5 text-slate-300 font-mono">Enter</kbd> tugmasiga bosing.</li>
+                  <li>Keyboard bilan harakatlanish uchun <kbd className="bg-slate-100 border border-slate-200 px-1 py-0.5 text-slate-700 font-mono">W</kbd> / <kbd className="bg-slate-100 border border-slate-200 px-1 py-0.5 text-slate-700 font-mono">↑</kbd> va <kbd className="bg-slate-100 border border-slate-200 px-1 py-0.5 text-slate-700 font-mono">S</kbd> / <kbd className="bg-slate-100 border border-slate-200 px-1 py-0.5 text-slate-700 font-mono">↓</kbd> tugmalaridan foydalaning.</li>
+                  <li>Xizmat koʻrsatish (to'pni serve qilish) uchun esa ekran ustidagi <strong className="text-amber-600">SERVIS ETISH</strong> tugmasini bosing yoki <kbd className="bg-slate-100 border border-slate-200 px-1 py-0.5 text-slate-700 font-mono">Space</kbd> / <kbd className="bg-slate-100 border border-slate-200 px-1 py-0.5 text-slate-700 font-mono">Enter</kbd> tugmasiga bosing.</li>
                 </ul>
               </div>
 
@@ -1181,7 +1175,7 @@ export default function App() {
                 setShowTutorial(false);
                 triggerSound('select');
               }}
-              className="mt-6 w-full py-2.5 bg-slate-950 border border-slate-800 hover:border-slate-700 hover:bg-slate-850 font-mono text-xs uppercase rounded-xl transition-all text-slate-300"
+              className="mt-6 w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-mono text-xs uppercase rounded-xl transition-all cursor-pointer"
             >
               Tushunarli
             </button>
@@ -1190,7 +1184,7 @@ export default function App() {
       )}
 
       {/* Modern Footer bar */}
-      <footer className="py-4 border-t border-slate-900 bg-slate-950/40 font-mono text-[10px] text-slate-600 text-center relative z-10" id="app_footer_bottom">
+      <footer className="py-4 border-t border-slate-200 bg-slate-100/60 font-mono text-[10px] text-slate-550 text-center relative z-10" id="app_footer_bottom">
         <p>© 2026 Tennis Arena Championship. Barcha huquqlar himoyalangan. Cyber stylized interactive build.</p>
       </footer>
 
