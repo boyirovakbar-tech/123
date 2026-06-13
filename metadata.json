@@ -1,0 +1,6 @@
+{
+  "name": "Tennis Arena",
+  "description": "An interactive, elegant tennis-pong-style game featuring high-quality modern graphics, responsive control mechanisms, stylized character selection, and audio synthesizers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
